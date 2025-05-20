@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Account | Real Voice TTS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <style>
+    .account-details {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .account-detail {
+      margin-bottom: 15px;
+    }
+    .detail-label {
+      font-weight: bold;
+      color: #555;
+    }
+    .logout-btn {
+      background: #d63031;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://img.icons8.com/color/96/microphone.png" alt="mic"/>
+      <div class="header-text">Your Account</div>
+    </div>
+
+    <div class="back-button" onclick="window.location.href='index.html'">
+      <div class="arrow">←</div>
+      <span>Back to Home</span>
+      <img src="https://img.icons8.com/color/48/user.png" alt="back"/>
+    </div>
+
+    <div class="account-details">
+      <h3>Account Information</h3>
+      <div class="account-detail">
+        <span class="detail-label">Username:</span>
+        <span id="account-username"></span>
+      </div>
+      <div class="account-detail">
+        <span class="detail-label">Email:</span>
+        <span id="account-email"></span>
+      </div>
+      <div class="account-detail">
+        <span class="detail-label">Member Since:</span>
+        <span id="account-joindate"></span>
+      </div>
+      <div class="account-detail">
+        <span class="detail-label">Audio Files:</span>
+        <span id="account-audiofiles"></span>
+      </div>
+      
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <script>
+    // Check if user is logged in
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if(!user) {
+      window.location.href = 'auth.html?type=login&redirect=account';
+    } else {
+      // Display user details
+      document.getElementById('account-username').textContent = user.username;
+      document.getElementById('account-email').textContent = user.email;
+      document.getElementById('account-joindate').textContent = user.joinDate;
+      document.getElementById('account-audiofiles').textContent = user.audioFiles.length;
+    }
+    
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

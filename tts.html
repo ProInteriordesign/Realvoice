@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Text to Speech | Real Voice TTS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #00b894;
+      color: #333;
+    }
+    .container {
+      padding: 20px;
+    }
+    .header {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header img {
+      width: 100px;
+      margin-right: 20px;
+    }
+    .header-text {
+      font-size: 22px;
+      font-weight: bold;
+      color: #555;
+    }
+    .back-button {
+      background: white;
+      border-radius: 20px;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .back-button img {
+      width: 30px;
+    }
+    .back-button span {
+      font-size: 18px;
+      font-weight: 500;
+      flex: 1;
+      text-align: center;
+    }
+    .arrow {
+      font-size: 20px;
+    }
+    .selection-box {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .selection-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #555;
+    }
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      background-color: #f9f9f9;
+    }
+    .text-box {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      resize: vertical;
+      background-color: #f9f9f9;
+    }
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+    .action-button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      margin: 0 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .action-button img {
+      width: 20px;
+      margin-right: 8px;
+    }
+    .paste-button {
+      background-color: #0984e3;
+      color: white;
+    }
+    .clear-button {
+      background-color: #d63031;
+      color: white;
+    }
+    .upload-button {
+      background-color: #00b894;
+      color: white;
+    }
+    .speak-button {
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #6c5ce7;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .speak-button img {
+      width: 24px;
+      margin-right: 10px;
+    }
+    input[type="file"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://img.icons8.com/color/96/microphone.png" alt="mic"/>
+      <div class="header-text">Real Voice <br>Text to Speech</div>
+    </div>
+
+    <div class="back-button" onclick="window.location.href='index.html'">
+      <div class="arrow">←</div>
+      <span>Back to Home</span>
+      <img src="https://img.icons8.com/color/48/speech-bubble-with-text.png" alt="tts"/>
+    </div>
+
+    <div class="selection-box">
+      <div class="selection-title">Select Language</div>
+      <select id="language-select">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="it">Italian</option>
+        <option value="ja">Japanese</option>
+        <option value="ko">Korean</option>
+        <option value="pt">Portuguese</option>
+        <option value="ru">Russian</option>
+        <option value="zh">Chinese</option>
+      </select>
+    </div>
+
+    <div class="selection-box">
+      <div class="selection-title">Select Voice</div>
+      <select id="voice-select">
+        <option value="male1">Male Voice 1</option>
+        <option value="female1">Female Voice 1</option>
+        <option value="male2">Male Voice 2</option>
+        <option value="female2">Female Voice 2</option>
+        <option value="child">Child Voice</option>
+      </select>
+    </div>
+
+    <div class="text-box">
+      <div class="selection-title">Write Text</div>
+      <textarea id="text-input" placeholder="Type or paste your text here..."></textarea>
+      <div class="button-row">
+        <button class="action-button paste-button" onclick="pasteText()">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/paste.png" alt="paste"/>
+          Paste
+        </button>
+        <button class="action-button clear-button" onclick="clearText()">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/clear-symbol.png" alt="clear"/>
+          Clear
+        </button>
+        <button class="action-button upload-button" onclick="document.getElementById('file-input').click()">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/upload.png" alt="upload"/>
+          Upload
+        </button>
+        <input type="file" id="file-input" accept=".txt,.doc,.docx" onchange="handleFileUpload(this)"/>
+      </div>
+    </div>
+
+    <button class="speak-button" onclick="speakText()">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/audio-wave--v1.png" alt="speak"/>
+      Speak Text
+    </button>
+  </div>
+
+  <script>
+    function pasteText() {
+      navigator.clipboard.readText()
+        .then(text => {
+          document.getElementById('text-input').value = text;
+        })
+        .catch(err => {
+          console.error('Failed to read clipboard contents: ', err);
+          alert('Failed to paste text. Please make sure you have clipboard permissions.');
+        });
+    }
+
+    function clearText() {
+      document.getElementById('text-input').value = '';
+    }
+
+    function handleFileUpload(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('text-input').value = e.target.result;
+      };
+      reader.readAsText(file);
+    }
+
+    function speakText() {
+      const text = document.getElementById('text-input').value;
+      const language = document.getElementById('language-select').value;
+      const voice = document.getElementById('voice-select').value;
+      
+      if (!text) {
+        alert('Please enter some text to speak');
+        return;
+      }
+
+      // This is where you would implement the actual TTS functionality
+      // For now, we'll just log the values
+      console.log('Speaking:', text);
+      console.log('Language:', language);
+      console.log('Voice:', voice);
+      
+      // In a real implementation, you would call your TTS API here
+      alert('Text-to-Speech functionality would play the text now');
+    }
+  </script>
+</body>
+</html>

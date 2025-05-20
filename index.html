@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Voice TTS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://img.icons8.com/color/96/microphone.png" alt="mic"/>
+      <div class="header-text">Real Voice <br>Text to Speech</div>
+    </div>
+
+    <div class="button" onclick="window.location.href='tts.html'">
+      <img src="https://img.icons8.com/color/48/speech-bubble-with-text.png" alt="tts"/>
+      <span>Text to Speech</span>
+      <div class="arrow">→</div>
+    </div>
+
+    <div class="button" onclick="checkLogin()">
+      <div class="arrow">←</div>
+      <span>Your Account</span>
+      <img src="https://img.icons8.com/color/48/user.png" alt="account"/>
+    </div>
+
+    <div class="button" onclick="checkLoginAudio()">
+      <img src="https://img.icons8.com/color/48/save--v1.png" alt="audio"/>
+      <span>Your Audio</span>
+      <div class="arrow">→</div>
+    </div>
+
+    <div class="button" onclick="window.location.href='contact.html'">
+      <div class="arrow">←</div>
+      <span>Contact us</span>
+      <img src="https://img.icons8.com/color/48/technical-support.png" alt="support"/>
+    </div>
+
+    <div class="auth-buttons" id="auth-buttons-container">
+      <!-- Filled by JavaScript -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Update auth buttons on load
+    window.onload = function() {
+      updateAuthButtons();
+    };
+
+    function checkLogin() {
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      if(user) {
+        window.location.href = 'account.html';
+      } else {
+        window.location.href = 'auth.html?type=login&redirect=account';
+      }
+    }
+
+    function checkLoginAudio() {
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      if(user) {
+        window.location.href = 'audio.html';
+      } else {
+        window.location.href = 'auth.html?type=login&redirect=audio';
+      }
+    }
+  </script>
+</body>
+</html>
